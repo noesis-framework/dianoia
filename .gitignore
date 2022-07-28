@@ -1,0 +1,10 @@
+.coverage/
+.idea/
+vendor/
+*.sqlite
+.phpunit.cache
+app/
+config/
+database/
+tmp/
+index.php
