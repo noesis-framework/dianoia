@@ -2,7 +2,7 @@
 
 namespace Test\Mock;
 
-use Affinity4\Dianoia\Support\Traits\EventTrait;
+use Noesis\Dianoia\Support\Traits\EventTrait;
 use Laminas\EventManager\EventInterface;
 
 class Eventable

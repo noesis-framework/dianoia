@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Affinity4\Dianoia\App\App;
-use Affinity4\Dianoia\Container\Container;
+use Noesis\Dianoia\App\App;
+use Noesis\Dianoia\Container\Container;
 use Aura\Session\Segment;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Collection;
@@ -244,7 +244,7 @@ test(App::class . '::getConfig returns instance of ' . Config::class, function (
 });
 
 test(App::class . ' $config passed to boot method can be access from getConfig()', function () {
-    $app = new Affinity4\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+    $app = new Noesis\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
     $app->boot([
         'app' => [
             'result' => [
@@ -258,7 +258,7 @@ test(App::class . ' $config passed to boot method can be access from getConfig()
 });
 
 test(App::class . ' $config[\'database\'] passed to boot method can be access from getConfig()', function () {
-    $app = new Affinity4\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+    $app = new Noesis\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
     $app->boot([
         'app' => [],
         'database' => [
@@ -273,7 +273,7 @@ test(App::class . ' $config[\'database\'] passed to boot method can be access fr
 });
 
 test(App::class . '::loadConfiguration() throws TypeError config is not array', function () {
-    $app = new Affinity4\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+    $app = new Noesis\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
     $app->boot([
         'app' => null,
         'database' => null
@@ -281,17 +281,17 @@ test(App::class . '::loadConfiguration() throws TypeError config is not array', 
 })->throws(TypeError::class);
 
 test(App::class . '::loadConfiguration() throws InvalidArgumentException when config is missing app', function () {
-    $app = new Affinity4\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+    $app = new Noesis\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
     $app->boot(['database' => []]);
 })->throws(InvalidArgumentException::class);
 
 test(App::class . '::loadConfiguration() throws InvalidArgumentException when config is missing database', function () {
-    $app = new Affinity4\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+    $app = new Noesis\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
     $app->boot(['app' => []]);
 })->throws(InvalidArgumentException::class);
 
 test(App::class . '::loadEloquent() correctly makes Eloquent Models available', function () {
-    $app = new Affinity4\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+    $app = new Noesis\Dianoia\App\App($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
     $app->boot([
         'app' => [],
         'database' => [

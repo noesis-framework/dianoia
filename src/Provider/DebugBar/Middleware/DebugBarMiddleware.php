@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Affinity4\Dianoia\Provider\DebugBar\Middleware;
+namespace Noesis\Dianoia\Provider\DebugBar\Middleware;
 
-use Affinity4\Dianoia\App\AppMiddleware;
+use Noesis\Dianoia\App\AppMiddleware;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Laminas\Diactoros\Stream;

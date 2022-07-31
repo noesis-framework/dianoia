@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Affinity4\Dianoia\Container;
+namespace Noesis\Dianoia\Container;
 
-use Affinity4\Dianoia\Container\Exception\NotFoundException;
+use Noesis\Dianoia\Container\Exception\NotFoundException;
 use DI\ContainerBuilder;
 use DI\Definition\Helper\DefinitionHelper;
 use Exception;
@@ -38,7 +38,6 @@ class Container implements ContainerInterface
         $this->setInjector(new Injector(null, $this));
 
         $containerBuilder = new ContainerBuilder();
-        // $containerBuilder->enableCompilation(__DIR__ . '/cache');
 
         $this->setContainer($containerBuilder->build());
     }

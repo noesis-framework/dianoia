@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Affinity4\Dianoia\Container\Container;
-use Affinity4\Dianoia\Container\Exception\NotFoundException;
+use Noesis\Dianoia\Container\Container;
+use Noesis\Dianoia\Container\Exception\NotFoundException;
 use Laminas\Config\Config;
 use Laminas\Di\Injector;
 use Laminas\Diactoros\Response;

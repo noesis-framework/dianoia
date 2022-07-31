@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Affinity4\Dianoia\App\App;
+use Noesis\Dianoia\App\App;
 use Laminas\Diactoros\Response\HtmlResponse;
 
 test('', function () {

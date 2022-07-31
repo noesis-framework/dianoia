@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Affinity4\Dianoia\Support\Traits;
+namespace Noesis\Dianoia\Support\Traits;
 
 use Laminas\EventManager\EventManager;
 use Laminas\EventManager\EventManagerInterface;

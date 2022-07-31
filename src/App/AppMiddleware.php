@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Affinity4\Dianoia\App;
+namespace Noesis\Dianoia\App;
 
-use Affinity4\Dianoia\Container\Container;
 use Laminas\Diactoros\ServerRequest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-abstract class AppMiddleware implements \Psr\Http\Server\MiddlewareInterface
+abstract class AppMiddleware implements MiddlewareInterface
 {
     protected ServerRequest $request;
 
@@ -35,18 +35,6 @@ abstract class AppMiddleware implements \Psr\Http\Server\MiddlewareInterface
     }
 
     /**
-     * Get Container.
-     *
-     * @param ServerRequestInterface $request
-     *
-     * @return Container
-     */
-    // protected function getContainer(ServerRequestInterface $request): Container
-    // {
-    //     return $this->getApp($request)->getContainer();
-    // }
-
-    /**
      * Get App.
      *
      * @param ServerRequestInterface $request
@@ -63,5 +51,8 @@ abstract class AppMiddleware implements \Psr\Http\Server\MiddlewareInterface
     /**
      * @inheritDoc
      */
-    abstract public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface;
+    abstract public function process(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $handler
+    ): ResponseInterface;
 }

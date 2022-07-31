@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Affinity4\Dianoia\Support\Traits;
+namespace Noesis\Dianoia\Support\Traits;
 
-use Affinity4\Dianoia\App\App;
 use DateTime;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
+use Noesis\Dianoia\App\App;
 use Psr\Log\InvalidArgumentException;
 
 trait LoggerTrait

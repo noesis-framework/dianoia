@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Affinity4\Dianoia\Provider\DebugBar\Traits;
+namespace Noesis\Dianoia\Provider\DebugBar\Traits;
 
-use Affinity4\Dianoia\Provider\DebugBar\DebugBar;
+use Noesis\Dianoia\Provider\DebugBar\DebugBar;
 
 trait DebugBarTrait
 {

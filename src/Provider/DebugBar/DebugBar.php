@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Affinity4\Dianoia\Provider\DebugBar;
+namespace Noesis\Dianoia\Provider\DebugBar;
 
-use Affinity4\Dianoia\App\App;
-use Affinity4\Dianoia\Provider\DebugBar\Collector\MonologCollector;
+use Noesis\Dianoia\App\App;
+use Noesis\Dianoia\Provider\DebugBar\Collector\EloquentCollector;
+use Noesis\Dianoia\Provider\DebugBar\Collector\MonologCollector;
 use DebugBar\DataCollector\TimeDataCollector;
-use DI\DependencyException;
-use DI\NotFoundException;
 use DebugBar\DataCollector\MemoryCollector;
 use DebugBar\DataCollector\MessagesCollector;
 use DebugBar\DataCollector\PhpInfoCollector;
@@ -29,8 +28,6 @@ class DebugBar extends PhpDebugBar
      * @param App $app
      *
      * @throws DebugBarException
-     * @throws DependencyException
-     * @throws NotFoundException
      */
     public function __construct(App $app)
     {
@@ -40,47 +37,90 @@ class DebugBar extends PhpDebugBar
     }
 
     /**
-     * Boot the debug bar.
+     * Add Monolog Collector.
+     *
+     * Adds Monolog tab to debug bar.
      *
      * @return void
      * @throws DebugBarException
-     * @throws DependencyException
-     * @throws NotFoundException
      */
-    public function boot(): void
+    private function addMonologCollector(): void
     {
-        $this->addCollector(new PhpInfoCollector());
-        $this->addCollector(new MemoryCollector());
-
-        $this->addCollector(new MessagesCollector());
-
-        $requestDataCollector = new RequestDataCollector();
-        $requestDataCollector->useHtmlVarDumper(true);
-        $this->addCollector($requestDataCollector);
-
         $logger = $this->app->getLogger($this->app->getLogChannel());
         $this->addCollector(new MonologCollector($logger));
+    }
 
+    /**
+     * Add Time Collector.
+     *
+     * Adds Timeline to DebugBar.
+     *
+     * @return void
+     * @throws DebugBarException
+     */
+    private function addTimeCollector(): void
+    {
         $startTime = $this->app->getGlobalValue('server', 'request_time_float');
         $this->addCollector(new TimeDataCollector($startTime));
         $debugBar = $this;
         $this->app->addEventListener(
             APP::class . '::boot.after',
-            function ($event) use ($debugBar, $startTime) {
+            function () use ($debugBar, $startTime) {
                 $debugBar['time']->addMeasure('Booted', $startTime, microtime(true));
             }
         );
         $this->app->addEventListener(
             APP::class . '::loadAppMiddlewares.before',
-            function ($event) use ($debugBar, $startTime) {
+            function () use ($debugBar, $startTime) {
                 $debugBar['time']->addMeasure('App middleware loaded', $startTime, microtime(true));
             }
         );
         $this->app->addEventListener(
             APP::class . '::run.before',
-            function ($event) use ($debugBar, $startTime) {
+            function () use ($debugBar, $startTime) {
                 $debugBar['time']->addMeasure('App rendered', $startTime, microtime(true));
             }
         );
+    }
+
+    /**
+     * Add Request Collector.
+     *
+     * Adds Request ($_GLOBALS) tab to DebugBar.
+     *
+     * @return void
+     * @throws DebugBarException
+     */
+    private function addRequestCollector(): void
+    {
+        $requestDataCollector = new RequestDataCollector();
+        $requestDataCollector->useHtmlVarDumper();
+        $this->addCollector($requestDataCollector);
+    }
+
+    /**
+     * @throws DebugBarException
+     */
+    private function addEloquentCollector(): void
+    {
+        $eloquentCollector = new EloquentCollector($this->app->getEloquent());
+        $this->addCollector($eloquentCollector);
+    }
+
+    /**
+     * Boot the debug bar.
+     *
+     * @return void
+     * @throws DebugBarException
+     */
+    public function boot(): void
+    {
+        $this->addCollector(new PhpInfoCollector());
+        $this->addCollector(new MemoryCollector());
+        $this->addCollector(new MessagesCollector());
+        $this->addRequestCollector();
+        $this->addMonologCollector();
+        $this->addTimeCollector();
+        $this->addEloquentCollector();
     }
 }
